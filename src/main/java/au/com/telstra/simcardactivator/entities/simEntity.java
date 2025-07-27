@@ -5,8 +5,16 @@ import javax.persistence.*;
 @Entity
 public class simEntity {
     @Id
+    @GeneratedValue()
+    private long id;
+
+    @Column(unique = true)
     private String iccid;
+
+    @Column(unique = true)
     private String customerEmail;
+
+    private boolean active;
 
     // Default constructor
     public simEntity() {
@@ -16,6 +24,11 @@ public class simEntity {
     public simEntity(String iccid, String customerEmail) {
         this.iccid = iccid;
         this.customerEmail = customerEmail;
+    }
+    public simEntity(String iccid, String customerEmail, boolean active) {
+        this.iccid = iccid;
+        this.customerEmail = customerEmail;
+        this.active=active;
     }
 
     // Getters and Setters
@@ -33,5 +46,12 @@ public class simEntity {
 
     public void setCustomerEmail(String customerEmail) {
         this.customerEmail = customerEmail;
+    }
+    public boolean getActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

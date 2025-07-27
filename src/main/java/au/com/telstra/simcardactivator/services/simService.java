@@ -25,16 +25,14 @@ public class simService {
     }
 
     // Getters and Setters
-    public simDTO getSimByICCID(String iccid){
-        simEntity simEnt=sRepo.getById(iccid);
-        return new simDTO(simEnt.getIccid(),simEnt.getCustomerEmail());
+    public simDTO getSimByICCID(Long id){
+        simEntity simEnt=sRepo.getById(id);
+        return new simDTO(simEnt.getIccid(),simEnt.getCustomerEmail(),simEnt.getActive());
     }
 
     public simDTO createSimByICCID(simDTO simdto){
-        simEntity simEnt=new simEntity(simdto.getIccid(),simdto.getCustomerEmail());
-        //disabling save to repostitory
-        //simEntity simEntSaved=sRepo.save(simEnt);
-        //return new simDTO(simEntSaved.getIccid(),simEntSaved.getCustomerEmail());
-        return new simDTO(simEnt.getIccid(),simEnt.getCustomerEmail());
+        simEntity simEnt=new simEntity(simdto.getIccid(),simdto.getCustomerEmail(),simdto.getActive());
+        simEntity simEntSaved=sRepo.save(simEnt);
+        return new simDTO(simEntSaved.getIccid(),simEntSaved.getCustomerEmail(),simEntSaved.getActive());
     }
 }

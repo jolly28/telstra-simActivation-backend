@@ -25,15 +25,18 @@ public class simController{
     }
 
     @GetMapping(path="/simActivate/{id}")
-    public simDTO getSimByICCID(@PathVariable("id") String iccid){
-        return simSvc.getSimByICCID(iccid);
+    public simDTO getSimByICCID(@PathVariable("id") Long id){
+        return simSvc.getSimByICCID(id);
     } 
 
     @PostMapping(path="/simActivate/")
     public simDTO createSimByICCID(@RequestBody simDTO simdto){
         SimCard simcard=new SimCard(simdto.getIccid());
         ActuationResult result = restTemplate.postForObject("http://localhost:8444/actuate", simcard, ActuationResult.class);
-        if(result.getSuccess())System.out.println(simcard.getIccid()+" ---- activatation Successful");
+        if(result.getSuccess()){
+            System.out.println(simcard.getIccid()+" ---- activatation Successful");
+            simdto.setActive(true);
+        }
         else System.out.println(simcard.getIccid()+" ---- activatation not Successful");
 
         return simSvc.createSimByICCID(simdto);
