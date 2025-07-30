@@ -33,11 +33,12 @@ public class simController{
     public simDTO createSimByICCID(@RequestBody simDTO simdto){
         SimCard simcard=new SimCard(simdto.getIccid());
         ActuationResult result = restTemplate.postForObject("http://localhost:8444/actuate", simcard, ActuationResult.class);
-        if(result.getSuccess()){
-            System.out.println(simcard.getIccid()+" ---- activatation Successful");
+        if (result != null && Boolean.TRUE.equals(result.getSuccess())) {
+            System.out.println(simcard.getIccid() + " ---- activation Successful");
             simdto.setActive(true);
+        } else {
+            System.out.println(simcard.getIccid() + " ---- activation not Successful");
         }
-        else System.out.println(simcard.getIccid()+" ---- activatation not Successful");
 
         return simSvc.createSimByICCID(simdto);
     } 
